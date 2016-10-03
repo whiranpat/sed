@@ -18,6 +18,9 @@ Gui:
 Credits
 
 Ryan Dufrene: Front-End Developer - Initial work
+
 Edward Gedeon: Front-End Developer - Initial work
+
 Walter Hiranpat: Django Backend / Database Developer - Initial work
+
 Sue Kim: Manager - Initial work
