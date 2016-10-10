@@ -1,5 +1,9 @@
 SED Django Web Registration Application Development
-
+installation:
+pip installation guide:
+https://github.com/BurntSushi/nfldb/wiki/Python-&-pip-Windows-installation
+django guide:
+https://docs.djangoproject.com/en/1.10/howto/windows/
 
 Gui:
  Finish Navbar
