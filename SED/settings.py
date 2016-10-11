@@ -79,7 +79,7 @@ DATABASES = {
 #        'ENGINE': 'django.db.backends.sqlite3',
 #        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'sed_database',
+        'NAME': 'sed_database_test',
         'USER': 'root',
         'PASSWORD':'tanu112591',
         'HOST': 'localhost',
