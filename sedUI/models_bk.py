@@ -1,4 +1,5 @@
 from django.db import models
+
 US_states=(
 	('AL','Alabama'),
 	('AK','Alaska'),
@@ -51,6 +52,7 @@ US_states=(
 	('WI','Wisconsin'),
 	('WY','Wyoming')
 	)
+
 # Create your models here.
 class Scout(models.Model):
 	gender_choice=(
@@ -76,7 +78,7 @@ class Scout(models.Model):
 	emergency_first_name=models.CharField(max_length=50, blank=True)
 	emergency_last_name=models.CharField(max_length=50, blank=True)
 	emergency_phone=models.IntegerField(default=0, blank=True)
-	affiliation=models.CharField( max_length=4, choices=clubs_choice, blank=True)
+	affiliation=models.CharField( max_length=4, choices=gender_choice, blank=True)
 
 class Health(models.Model):
 	scout_id=models.ForeignKey(Scout, on_delete=models.CASCADE)
@@ -85,15 +87,12 @@ class Health(models.Model):
 
 class Question_list(models.Model):
 	question_id=models.AutoField(primary_key=True)
-	question=models.CharField(max_length=500)
+	question=models.CharField(max_length=500,blank=True)
 
 class Course(models.Model):
 	class_id=models.AutoField(primary_key=True)
-	class_name=models.CharField(max_length=50)
-	class_description=models.CharField(max_length=500)
-
-	def __str__(self):
-		return self.class_name + '-' +self.class_descriptionS
+	class_name=models.CharField(max_length=50, blank=True)
+	class_description=models.CharField(max_length=500, blank=True)
 
 class Staff(models.Model):
 	activity_status_choice=(
@@ -129,16 +128,42 @@ class Location(models.Model):
 	capacity=models.IntegerField(default=0, blank=True)
 
 class Workshop(models.Model):
+	workshop_times=(
+		('AM','am'),
+		('PM','pm')
+		)
 	workshop_id=models.AutoField(primary_key=True)
-
-class Group_staff(models.Model):
-	group_staff_id=models.AutoField(primary_key=True)
+	class_id=models.ForeignKey(Course, on_delete=models.CASCADE)
+	location_id=models.ForeignKey(Location, on_delete=models.CASCADE)
+	workshop_format=models.CharField(max_length=2, choices=workshop_times, blank=True)
+	price=models.IntegerField(default=0, blank=True)
+	staff_id=models.ForeignKey(Staff, on_delete=models.CASCADE)
 
 class Security_question(models.Model):
 	scout_id=models.ForeignKey(Scout, on_delete=models.CASCADE)
+	question_id=models.IntegerField(default=0, blank=True)
+	answer=models.CharField(max_length=500, blank=True)
 
 class Registration(models.Model):
-	registration_id=models.AutoField(primary_key=True)
+	payment_type=(
+		('CH','Check'),
+		('DB','Debit'),
+		('CR','Credit'),
+		('CA','Cash')
+		)
+	workshop_id=models.ForeignKey(Workshop, on_delete=models.CASCADE)
+	scout_id=models.ForeignKey(Scout, on_delete=models.CASCADE)
+	payment_method=models.CharField( max_length=2, choices=payment_type, blank=True)
+	confirmation_number=models.IntegerField(default=0, blank=True)
+	registration_date=models.IntegerField(default=0, blank=True)
 
 class Workshop_session(models.Model):
-	workshop_session_id=models.AutoField(primary_key=True)
+	status_choice=(
+		('I','incompleted'),
+		('C','completed')
+		)
+	workshop_id=models.ForeignKey(Workshop, on_delete=models.CASCADE)
+	scout_id=models.ForeignKey(Scout, on_delete=models.CASCADE)
+	check_in=models.IntegerField(default=0, blank=True)
+	check_out=models.IntegerField(default=0, blank=True)
+	completion_status=models.CharField(max_length=1, choices=status_choice, blank=True)
